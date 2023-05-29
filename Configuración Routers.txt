@@ -1,0 +1,47 @@
+enable
+configure terminal
+hostname gonzalez
+banner motd # Uso exclusivo de Alexis #
+line console 0
+logging synchronous
+password claveC
+login
+exit
+line vty 0 15
+logging synchronous
+password claveT
+login
+exit
+no ip domain-lookup
+enable secret cisco
+
+interface gigabitEthernet 0/0
+description "Computador 11 - Gigabit Ethernet 0/0"
+interface serial 0/0/1
+description "DCE Serial 0/0/1 Lab 7"
+exit
+exit
+-----------------------------
+copy running-config startup-config
+show running-config
+--------------------------------
+interface gigabitEthernet 0/0
+ip address 192.168.1.0 255.255.255.254
+no shutdown
+--------------------DHCP--------------------
+conf t
+service dhcp
+ip dhcp excluded-address 91.0.0.65
+ip dhcp pool Alexis
+network 91.0.0.64 255.255.255.192
+default-router 91.0.0.65
+dns-server 91.0.0.126
+exit
+--------------------RIP con VLMS--------------------
+router rip
+version 2
+network 91.0.0.64
+network 100.0.0.36
+no auto-summary
+exit
+exit

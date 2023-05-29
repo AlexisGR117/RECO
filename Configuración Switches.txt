@@ -1,0 +1,60 @@
+enable
+configure terminal
+hostname Alexis
+banner motd # Uso exclusivo para estudiantes de RECO #
+line console 0
+logging synchronous
+password Clave_C
+login
+exit
+line vty 0 15
+logging synchronous
+password Clave_T
+login
+exit
+no ip domain-lookup
+enable secret Clave_E
+
+interface 
+description “”
+
+
+exit
+
+copy running-config startup-config
+show running-config
+
+
+Destination filename [startup-config]? [enter]
+
+
+
+-------------------------vlan
+
+vlan 10
+name VLAN1
+exit
+vlan 15
+name VLAN2
+exit
+vlan 20
+name VLAN3
+exit
+
+configure terminal
+interface Fa0/1
+switchport mode access
+switchport access vlan 55
+end 
+configure terminal
+interface Fa0/2
+switchport mode access
+switchport access vlan 50
+end 
+------------------------troncal
+configure terminal
+interface Gi0/1
+description "Conexion con switch 7"
+switchport mode trunk
+end
+
